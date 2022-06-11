@@ -1,74 +1,75 @@
-const Menu = require("../models/MenuModal");
+const Item = require("../models/ItemModal");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../middleware/catchAsyncError")
 
 //Create Menu 
-exports.createMenus = catchAsyncErrors(async(req,res,next)=>{
-    const menu = await Menu.create(req.body);
+exports.createItem = catchAsyncErrors(async(req,res,next)=>{
+    const item = await Item.create(req.body);
     res.status(201).json({
         success:true,
-        menu
+        item
     })
 })
 
-//Get All Product
-exports.getAllMenus = catchAsyncErrors(async(req,res)=>{
+//Get All Menu
+exports.getAllItems = catchAsyncErrors(async(req,res)=>{
 
-    const menus  = await Menu.find();
+    const items  = await Item.find();
+    console.log('item')
     res.status(201).json({
         success:true,
-        menus
+        items
     })
 })
 
-//get single product deltails
-exports.getMenuDetails =catchAsyncErrors( async(req,res,next)=>{
+//get single Menu details
+// exports.getMenuDetails =catchAsyncErrors( async(req,res,next)=>{
 
-    const menu = await Menu.findById(req.params.id);
-    if(!menu){
-        return next(new ErrorHandler("Menu not found",404))
-    }
-    res.status(201).json({
-        success:true,
-        menu
-    })
-})
+//     const menu = await Menu.findById(req.params.id);
+//     if(!menu){
+//         return next(new ErrorHandler("Menu not found",404))
+//     }
+//     res.status(201).json({
+//         success:true,
+//         menu
+//     })
+// })
 
 
-//Update any product -- Admin
-exports.updateMenu = catchAsyncErrors(async(req,res,next)=>{
+//Update any Product -- Admin
+exports.updateItem = catchAsyncErrors(async(req,res,next)=>{
 
-    let menu =await Menu.findById(req.params.id);
-    if(!menu){
+    let item =await Item.findById(req.params.id);
+    if(!item){
         return res.status(500).json({
             success:false,
-            message:"Product not found"
+            message:"Item not found"
         })
     }
-    menu = await Menu.findByIdAndUpdate(req.params.id,req.body,{
+    item = await Item.findByIdAndUpdate(req.params.id,req.body,{
         new:true,
         runValidators:true,
         useFindAndModify:false
     })
     res.status(201).json({
         success:true,
-        menu
+        item
     })
 })
 
-//Delete Product
+//Delete Menu
 
-exports.deleteMenu = catchAsyncErrors(async(req,res,next)=>{
-    const menu = await Menu.findById(req.params.id);
-    if(!menu){
+exports.deleteItem = catchAsyncErrors(async(req,res,next)=>{
+    const item = await Item.findById(req.params.id);
+    if(!item){
         return res.status(500).json({
             success:false,
-            message:"Menu not found"
+            message:"Item not found"
         })
     }
-    await menu.remove();
+    await item.remove();
     res.status(201).json({
         success:true,
-        message:"Menu deleted successfully"
+        message:"Item deleted successfully"
     })
 })
