@@ -4,6 +4,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncError")
 
 //Create Menu 
 exports.createItem = catchAsyncErrors(async(req,res,next)=>{
+    req.body.user = req.user.id
     const item = await Item.create(req.body);
     res.status(201).json({
         success:true,
@@ -15,8 +16,17 @@ exports.createItem = catchAsyncErrors(async(req,res,next)=>{
 exports.getAllItems = catchAsyncErrors(async(req,res)=>{
 
     const items  = await Item.find();
-    console.log('item')
-    res.status(201).json({
+    console.log(req.query)
+    const {table} = req.query
+    if(!table) throw new ErrorHandler('Table not sent', 404)
+    const options = {
+        expires: new Date(
+          Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+        ),
+        httpOnly: true,
+      };
+    
+    res.status(201).cookie('table',table, options).json({
         success:true,
         items
     })

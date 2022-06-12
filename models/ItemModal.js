@@ -16,6 +16,11 @@ const itemSchema = new mongoose.Schema({
     required: [true, "Please Enter product Price"],
     maxLength: [4, "Price cannot exceed 8 characters"],
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Item", itemSchema);

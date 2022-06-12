@@ -5,12 +5,12 @@ const Table = require('./models/TableModal')
 
 const tables = [   
     new Table(
-        {no:104},
-        {no:101},
-        {no:102},
-        {no:103},
-        {no:104},
-        {no:105},
+        {no:104,status:'free'},
+        {no:101,status:'free'},
+        {no:102,status:'free'},
+        {no:103,status:'free'},
+        {no:104,status:'free'},
+        {no:105,status:'free'},
         ),];
 
         const connectDatabase=()=>{
@@ -21,9 +21,8 @@ const tables = [
                 console.log(err.stack);
                 process.exit(1);
               })
-
-            Table.insertMany(tables);
-            
         }
         connectDatabase();
+        Table.deleteMany(tables)
+        
 
