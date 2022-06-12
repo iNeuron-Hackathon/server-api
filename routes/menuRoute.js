@@ -1,5 +1,5 @@
 const express = require("express");
-const {  getAllItems,createItem,updateItem,deleteItem} = require("../controllers/menuController");
+const {  getAllItems,createItem,updateItem,deleteItem} = require("../controllers/MenuController");
 const { isAuthenticatedUser } = require("../middleware/auth");
 
 const router = express.Router();
